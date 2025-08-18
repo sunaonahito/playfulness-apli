@@ -213,9 +213,10 @@
         }
 
         .btn-nav {
-            flex: 1;
+            width: 200px;
             padding: 12px 24px;
             font-size: 1rem;
+            margin: 0 auto;
         }
 
         .btn-prev {
@@ -587,9 +588,6 @@
                     <button class="btn btn-nav btn-prev" onclick="previousQuestion()" id="prev-btn" disabled>
                         ← 前へ
                     </button>
-                    <button class="btn btn-nav" onclick="nextQuestion()" id="next-btn" disabled>
-                        次へ →
-                    </button>
                 </div>
             </div>
         </div>
@@ -793,7 +791,6 @@
             
             // ナビゲーションボタンの状態更新
             document.getElementById('prev-btn').disabled = index === 0;
-            updateNextButton();
             hideError();
         }
 
@@ -807,36 +804,19 @@
             });
             event.target.classList.add('selected');
             
-            updateNextButton();
             hideError();
+            
+            // 0.5秒後に自動で次の質問へ
+            setTimeout(() => {
+                if (app.currentQuestion < app.totalQuestions - 1) {
+                    app.currentQuestion++;
+                    displayQuestion(app.currentQuestion);
+                } else {
+                    calculateAndShowResults();
+                }
+            }, 500);
         }
 
-        // 次へボタンの状態更新
-        function updateNextButton() {
-            const currentQuestionId = questions[app.currentQuestion].id;
-            const hasAnswer = app.answers[currentQuestionId] !== undefined;
-            const nextBtn = document.getElementById('next-btn');
-            
-            nextBtn.disabled = !hasAnswer;
-            nextBtn.textContent = app.currentQuestion === app.totalQuestions - 1 ? '結果を見る →' : '次へ →';
-        }
-
-        // 次の質問へ
-        function nextQuestion() {
-            const currentQuestionId = questions[app.currentQuestion].id;
-            
-            if (app.answers[currentQuestionId] === undefined) {
-                showError();
-                return;
-            }
-            
-            if (app.currentQuestion < app.totalQuestions - 1) {
-                app.currentQuestion++;
-                displayQuestion(app.currentQuestion);
-            } else {
-                calculateAndShowResults();
-            }
-        }
 
         // 前の質問へ
         function previousQuestion() {
