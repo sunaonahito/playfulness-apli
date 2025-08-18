@@ -184,26 +184,28 @@
             align-items: center;
             justify-content: center;
             padding: 16px;
-            border: 2px solid #e0e0e0;
+            border: 2px solid #e0e0e0 !important;
             border-radius: 12px;
             cursor: pointer;
             transition: var(--transition);
-            background: white;
+            background: white !important;
+            color: var(--text-color) !important;
             font-size: 1rem;
             text-align: center;
+            font-weight: normal !important;
         }
 
         .answer-option:hover {
-            border-color: var(--primary-color);
-            background: rgba(255, 138, 155, 0.1);
+            border-color: var(--primary-color) !important;
+            background: rgba(255, 138, 155, 0.1) !important;
             transform: translateY(-2px);
         }
 
         .answer-option.selected {
-            border-color: var(--primary-color);
-            background: rgba(255, 138, 155, 0.2);
-            color: var(--primary-color);
-            font-weight: 600;
+            border-color: var(--primary-color) !important;
+            background: rgba(255, 138, 155, 0.2) !important;
+            color: var(--primary-color) !important;
+            font-weight: 600 !important;
         }
 
         .navigation {
@@ -785,7 +787,18 @@
                     optionElement.classList.add('selected');
                 }
                 
-                optionElement.addEventListener('click', () => selectAnswer(question.id, option.value));
+                optionElement.addEventListener('click', (event) => {
+                    // モバイル対応：全ての選択状態を確実にクリア
+                    document.querySelectorAll('.answer-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                        opt.style.backgroundColor = '';
+                        opt.style.borderColor = '';
+                        opt.style.color = '';
+                    });
+                    
+                    selectAnswer(question.id, option.value, event.target);
+                });
+                
                 optionsContainer.appendChild(optionElement);
             });
             
@@ -795,14 +808,13 @@
         }
 
         // 回答選択
-        function selectAnswer(questionId, value) {
+        function selectAnswer(questionId, value, targetElement) {
             app.answers[questionId] = value;
             
-            // 選択状態の更新
-            document.querySelectorAll('.answer-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            event.target.classList.add('selected');
+            // 選択状態の更新（既にクリックイベントでクリア済み）
+            if (targetElement) {
+                targetElement.classList.add('selected');
+            }
             
             hideError();
             
