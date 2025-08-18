@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プレイフル診断 - 日常の小さな幸せを見つけよう</title>
+    <style>
+        :root {
+            --primary-color: #FF8A9B;
+            --accent-yellow: #FFD93D;
+            --accent-green: #6BCF7F;
+            --text-color: #333;
+            --background-gradient: linear-gradient(135deg, #FFE0E6 0%, #FFF5E6 50%, #E6F7E6 100%);
+            --card-shadow: 0 8px 32px rgba(255, 138, 155, 0.2);
+            --border-radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--background-gradient);
+            min-height: 100vh;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: #e5798a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 138, 155, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: var(--accent-green);
+        }
+
+        .btn-secondary:hover {
+            background: #5bb86f;
+        }
+
+        .progress-container {
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-yellow));
+            border-radius: 4px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            color: var(--text-color);
+        }
+
+        .answer-options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .answer-option {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: white;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .answer-option:hover {
+            border-color: var(--primary-color);
+            background: rgba(255, 138, 155, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .answer-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(255, 138, 155, 0.2);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-nav {
+            flex: 1;
+            padding: 12px 24px;
+            font-size: 1rem;
+        }
+
+        .btn-prev {
+            background: #666;
+        }
+
+        .btn-prev:hover {
+            background: #555;
+        }
+
+        .results-container {
+            text-align: center;
+        }
+
+        .total-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0;
+            animation: countUp 1s ease;
+        }
+
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .score-label {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .factor-scores {
+            margin: 2rem 0;
+        }
+
+        .factor-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 138, 155, 0.2);
+        }
+
+        .factor-name {
+            font-weight: 600;
+            flex: 1;
+            text-align: left;
+        }
+
+        .factor-score {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-left: 1rem;
+        }
+
+        .factor-bar {
+            flex: 2;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 0 1rem;
+            overflow: hidden;
+        }
+
+        .factor-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-yellow));
+            border-radius: 4px;
+            transition: width 1s ease;
+            width: 0%;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .level-high {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .level-moderate-high {
+            background: var(--accent-yellow);
+            color: #333;
+        }
+
+        .level-moderate-low {
+            background: #ffa500;
+            color: white;
+        }
+
+        .level-low {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .comment-section {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 138, 155, 0.2);
+            text-align: left;
+        }
+
+        .comment-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .comment-text {
+            line-height: 1.7;
+            color: #444;
+            font-size: 1rem;
+        }
+
+        .factor-comment {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .factor-comment-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .form-section {
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 138, 155, 0.1);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 138, 155, 0.1);
+        }
+
+        .required {
+            color: var(--primary-color);
+            margin-left: 2px;
+        }
+
+        .form-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .total-score {
+                font-size: 2.5rem;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: #d8000c;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            border: 1px solid #ffcccc;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 20%, 40%, 60%, 80% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            margin: 1rem 0;
+        }
+
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            animation: bounce 1.4s ease-in-out infinite both;
+        }
+
+        .loading-dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ウェルカム画面 -->
+        <div class="screen active" id="welcome-screen">
+            <div class="card">
+                <h1>🌸 プレイフル診断</h1>
+                <p class="subtitle">
+                    日常の小さな幸せを見つけよう<br>
+                    あなたのプレイフルネス（遊び心・楽しさを見つける力）を測定します
+                </p>
+                <div style="text-align: center; margin: 2rem 0;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🎈</div>
+                    <p style="color: #666; font-size: 1rem;">
+                        <strong>所要時間:</strong> 5-10分<br>
+                        <strong>質問数:</strong> 25項目<br>
+                        <strong>あなたの日常での遊び心を見つめ直してみませんか？</strong>
+                    </p>
+                </div>
+
+                <div class="form-section">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem; text-align: center;">📝 基本情報をお聞かせください</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="name">お名前<span class="required">*</span></label>
+                        <input type="text" id="name" class="form-input" placeholder="例：田中 花子" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="age">年齢<span class="required">*</span></label>
+                        <input type="number" id="age" class="form-input" placeholder="例：30" min="18" max="99" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="gender">性別<span class="required">*</span></label>
+                        <select id="gender" class="form-select" required>
+                            <option value="">選択してください</option>
+                            <option value="女性">女性</option>
+                            <option value="男性">男性</option>
+                            <option value="その他">その他</option>
+                            <option value="回答しない">回答しない</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">メールアドレス<span class="required">*</span></label>
+                        <input type="email" id="email" class="form-input" placeholder="例：example@mail.com" required>
+                        <div class="form-note">
+                            📧 結果送信やフォローアップ研究のために使用させていただきます。<br>
+                            個人情報は厳重に管理し、研究目的以外には使用いたしません。
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-error" class="error-message" style="display: none;">
+                    すべての項目を入力してください 😊
+                </div>
+
+                <button class="btn" onclick="startDiagnosis()">
+                    <span class="emoji">✨</span>診断をはじめる
+                </button>
+            </div>
+        </div>
+
+        <!-- 質問画面 -->
+        <div class="screen" id="question-screen">
+            <div class="card">
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">質問 1 / 25</div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-text" id="question-text"></div>
+                    <div class="answer-options" id="answer-options"></div>
+                </div>
+
+                <div id="error-message" class="error-message" style="display: none;">
+                    回答を選択してください 😊
+                </div>
+
+                <div class="navigation">
+                    <button class="btn btn-nav btn-prev" onclick="previousQuestion()" id="prev-btn" disabled>
+                        ← 前へ
+                    </button>
+                    <button class="btn btn-nav" onclick="nextQuestion()" id="next-btn" disabled>
+                        次へ →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 結果画面 -->
+        <div class="screen" id="results-screen">
+            <div class="card">
+                <h2>🎉 診断結果</h2>
+                
+                <div class="results-container">
+                    <div class="total-score" id="total-score">0.0</div>
+                    <div class="score-label">総合プレイフルネススコア</div>
+                    <div class="level-badge" id="level-badge">計算中...</div>
+                </div>
+
+                <div class="factor-scores" id="factor-scores">
+                    <!-- 因子別スコアがここに表示される -->
+                </div>
+
+                <div class="comment-section" id="comment-section">
+                    <div class="comment-title">✨ あなたのプレイフルネスについて</div>
+                    <div class="comment-text" id="main-comment">
+                        <!-- メインコメントがここに表示される -->
+                    </div>
+                    <div id="factor-comments">
+                        <!-- 因子別コメントがここに表示される -->
+                    </div>
+                </div>
+
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="restartDiagnosis()">
+                        <span class="emoji">🔄</span>もう一度診断する
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 質問データ
+        const questions = [
+            // 因子1: 日常の楽しさ発見（Q1-Q6）
+            { id: 1, text: "家事や育児の中で、ちょっとした楽しみを見つけることができた", factor: 1 },
+            { id: 2, text: "いつものルーティンの中に、新鮮さや面白さを感じることがあった", factor: 1 },
+            { id: 3, text: "忙しい毎日でも、心から「楽しい」と感じる瞬間があった", factor: 1 },
+            { id: 4, text: "些細なことでも、喜びを感じることができた", factor: 1 },
+            { id: 5, text: "単調に思える日常の中で、ワクワクすることを見つけられた", factor: 1 },
+            { id: 6, text: "疲れていても、何かを楽しいと感じることがあった", factor: 1 },
+
+            // 因子2: 自由感・解放感（Q7-Q11）
+            { id: 7, text: "自分らしくいられる時間を持つことができた", factor: 2 },
+            { id: 8, text: "「母親」という役割から離れて、一人の人間として自由を感じることがあった", factor: 2 },
+            { id: 9, text: "やらなければならないことを忘れて、好きなことに没頭できた", factor: 2 },
+            { id: 10, text: "周りの目を気にせず、思いのままに行動できる瞬間があった", factor: 2 },
+            { id: 11, text: "心の中で「解放された」と感じることがあった", factor: 2 },
+
+            // 因子3: 創造的・自発的活動（Q12-Q16）
+            { id: 12, text: "思いついたアイデアを、実際に試してみることがあった", factor: 3 },
+            { id: 13, text: "計画にはなかったことを、その場のひらめきで実行した", factor: 3 },
+            { id: 14, text: "新しいやり方や工夫を思いついて、試してみた", factor: 3 },
+            { id: 15, text: "「こんなことをしてみたい」と思ったことを、実際にやってみた", factor: 3 },
+            { id: 16, text: "いつもとは違うことに挑戦してみたいという気持ちになった", factor: 3 },
+
+            // 因子4: 子どもとのプレイフル交流（Q17-Q20）
+            { id: 17, text: "子どもと一緒に、心から楽しい時間を過ごすことができた", factor: 4 },
+            { id: 18, text: "子どもと遊んでいる時に、自分も童心に返って楽しめた", factor: 4 },
+            { id: 19, text: "子どもとの何気ない会話や触れ合いの中で、笑顔になることがあった", factor: 4 },
+            { id: 20, text: "子どもと一緒に新しい発見や驚きを共有することがあった", factor: 4 },
+
+            // 因子5: 社会的つながりでの楽しさ（Q21-Q25）
+            { id: 21, text: "友人や知り合いとの会話で、心から笑うことがあった", factor: 5 },
+            { id: 22, text: "他の人と一緒にいる時に、楽しい気持ちを共有できた", factor: 5 },
+            { id: 23, text: "近所の人との交流の中でリラックスして楽しめた", factor: 5 },
+            { id: 24, text: "SNSやオンラインでのやり取りで、楽しい気分になることがあった", factor: 5 },
+            { id: 25, text: "誰かと一緒に何かをする中で、ワクワクする気持ちを感じた", factor: 5 }
+        ];
+
+        const answerOptions = [
+            { value: 1, text: "😔 まったく当てはまらない" },
+            { value: 2, text: "😐 あまり当てはまらない" },
+            { value: 3, text: "🙂 どちらでもない" },
+            { value: 4, text: "😊 やや当てはまる" },
+            { value: 5, text: "😄 とても当てはまる" }
+        ];
+
+        const factorNames = [
+            "日常の楽しさ発見",
+            "自由感・解放感", 
+            "創造的・自発的活動",
+            "子どもとのプレイフル交流",
+            "社会的つながりでの楽しさ"
+        ];
+
+        // アプリケーション状態
+        const app = {
+            currentQuestion: 0,
+            answers: {},
+            totalQuestions: questions.length,
+            personalInfo: {}
+        };
+
+        // Google Apps Script URL（実際のものに変更してください）
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+
+        // 診断開始
+        function startDiagnosis() {
+            // フォーム入力チェック
+            if (!validatePersonalInfo()) {
+                showFormError();
+                return;
+            }
+
+            // 個人情報を保存
+            savePersonalInfo();
+            hideFormError();
+            
+            showScreen('question-screen');
+            displayQuestion(0);
+        }
+
+        // 個人情報バリデーション
+        function validatePersonalInfo() {
+            const name = document.getElementById('name').value.trim();
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            const email = document.getElementById('email').value.trim();
+
+            return name && age && gender && email && validateEmail(email);
+        }
+
+        // メールアドレスバリデーション
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // 個人情報保存
+        function savePersonalInfo() {
+            app.personalInfo = {
+                name: document.getElementById('name').value.trim(),
+                age: parseInt(document.getElementById('age').value),
+                gender: document.getElementById('gender').value,
+                email: document.getElementById('email').value.trim()
+            };
+        }
+
+        // フォームエラー表示
+        function showFormError() {
+            const errorMessage = document.getElementById('form-error');
+            errorMessage.style.display = 'block';
+            setTimeout(hideFormError, 3000);
+        }
+
+        // フォームエラー非表示
+        function hideFormError() {
+            document.getElementById('form-error').style.display = 'none';
+        }
+
+        // 画面表示切り替え
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // 質問表示
+        function displayQuestion(index) {
+            const question = questions[index];
+            document.getElementById('question-text').textContent = question.text;
+            
+            // 進捗更新
+            const progress = ((index + 1) / app.totalQuestions) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('progress-text').textContent = `質問 ${index + 1} / ${app.totalQuestions}`;
+            
+            // 回答選択肢表示
+            const optionsContainer = document.getElementById('answer-options');
+            optionsContainer.innerHTML = '';
+            
+            answerOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'answer-option';
+                optionElement.textContent = option.text;
+                optionElement.dataset.value = option.value;
+                
+                // 既存の回答があれば選択状態にする
+                if (app.answers[question.id] === option.value) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.addEventListener('click', () => selectAnswer(question.id, option.value));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // ナビゲーションボタンの状態更新
+            document.getElementById('prev-btn').disabled = index === 0;
+            updateNextButton();
+            hideError();
+        }
+
+        // 回答選択
+        function selectAnswer(questionId, value) {
+            app.answers[questionId] = value;
+            
+            // 選択状態の更新
+            document.querySelectorAll('.answer-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            updateNextButton();
+            hideError();
+        }
+
+        // 次へボタンの状態更新
+        function updateNextButton() {
+            const currentQuestionId = questions[app.currentQuestion].id;
+            const hasAnswer = app.answers[currentQuestionId] !== undefined;
+            const nextBtn = document.getElementById('next-btn');
+            
+            nextBtn.disabled = !hasAnswer;
+            nextBtn.textContent = app.currentQuestion === app.totalQuestions - 1 ? '結果を見る →' : '次へ →';
+        }
+
+        // 次の質問へ
+        function nextQuestion() {
+            const currentQuestionId = questions[app.currentQuestion].id;
+            
+            if (app.answers[currentQuestionId] === undefined) {
+                showError();
+                return;
+            }
+            
+            if (app.currentQuestion < app.totalQuestions - 1) {
+                app.currentQuestion++;
+                displayQuestion(app.currentQuestion);
+            } else {
+                calculateAndShowResults();
+            }
+        }
+
+        // 前の質問へ
+        function previousQuestion() {
+            if (app.currentQuestion > 0) {
+                app.currentQuestion--;
+                displayQuestion(app.currentQuestion);
+            }
+        }
+
+        // エラー表示
+        function showError() {
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.style.display = 'block';
+            setTimeout(hideError, 3000);
+        }
+
+        // エラー非表示
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        // 結果計算と表示
+        function calculateAndShowResults() {
+            showScreen('results-screen');
+            
+            // ローディング表示
+            document.getElementById('loading').style.display = 'flex';
+            
+            setTimeout(() => {
+                const results = calculateResults();
+                displayResults(results);
+                saveToGoogleSheets(results);
+                document.getElementById('loading').style.display = 'none';
+            }, 1000);
+        }
+
+        // スコア計算
+        function calculateResults() {
+            const factorScores = [0, 0, 0, 0, 0]; // 5つの因子
+            const factorCounts = [0, 0, 0, 0, 0];
+            
+            questions.forEach(question => {
+                const answer = app.answers[question.id];
+                if (answer !== undefined) {
+                    factorScores[question.factor - 1] += answer;
+                    factorCounts[question.factor - 1]++;
+                }
+            });
+            
+            // 因子別平均スコア計算
+            const factorAverages = factorScores.map((score, index) => 
+                factorCounts[index] > 0 ? score / factorCounts[index] : 0
+            );
+            
+            // 総合スコア計算
+            const totalScore = factorAverages.reduce((sum, avg) => sum + avg, 0) / factorAverages.length;
+            
+            return {
+                totalScore: totalScore,
+                factorScores: factorAverages,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                answers: app.answers
+            };
+        }
+
+        // 結果表示
+        function displayResults(results) {
+            // 総合スコア表示
+            const totalScoreElement = document.getElementById('total-score');
+            animateNumber(totalScoreElement, 0, results.totalScore, 1500);
+            
+            // レベル判定
+            const level = getLevel(results.totalScore);
+            const levelBadge = document.getElementById('level-badge');
+            levelBadge.textContent = level.text + ' ' + level.emoji;
+            levelBadge.className = 'level-badge ' + level.class;
+            
+            // 因子別スコア表示
+            const factorContainer = document.getElementById('factor-scores');
+            factorContainer.innerHTML = '';
+            
+            results.factorScores.forEach((score, index) => {
+                const factorItem = document.createElement('div');
+                factorItem.className = 'factor-item';
+                factorItem.innerHTML = `
+                    <div class="factor-name">${factorNames[index]}</div>
+                    <div class="factor-bar">
+                        <div class="factor-bar-fill" style="width: 0%"></div>
+                    </div>
+                    <div class="factor-score">${score.toFixed(1)}</div>
+                `;
+                factorContainer.appendChild(factorItem);
+                
+                // バーアニメーション
+                setTimeout(() => {
+                    const barFill = factorItem.querySelector('.factor-bar-fill');
+                    barFill.style.width = (score / 5 * 100) + '%';
+                }, 500 + index * 200);
+            });
+
+            // コメント表示
+            displayComments(results);
+        }
+
+        // コメント表示
+        function displayComments(results) {
+            // メインコメント
+            const mainComment = getMainComment(results.totalScore);
+            document.getElementById('main-comment').innerHTML = mainComment;
+
+            // 因子別コメント
+            const factorCommentsContainer = document.getElementById('factor-comments');
+            const factorComments = getFactorComments(results.factorScores);
+            
+            factorCommentsContainer.innerHTML = '';
+            factorComments.forEach(comment => {
+                if (comment.show) {
+                    const commentDiv = document.createElement('div');
+                    commentDiv.className = 'factor-comment';
+                    commentDiv.innerHTML = `
+                        <div class="factor-comment-title">${comment.title}</div>
+                        <div>${comment.text}</div>
+                    `;
+                    factorCommentsContainer.appendChild(commentDiv);
+                }
+            });
+        }
+
+        // メインコメント生成
+        function getMainComment(totalScore) {
+            if (totalScore >= 4.0) {
+                return `
+                    <strong>🌟 とても高いプレイフルネス</strong><br>
+                    日常生活の中で豊かなプレイフル体験ができており、心豊かな毎日を送られています。忙しい毎日の中でも、楽しさや喜びを見つける力が備わっており、それは心の健康にとってとても大切な要素です。<br><br>
+                    この素晴らしい状態を維持してください。あなたの前向きな姿勢は、お子さんや周りの人にも良い影響を与えているはずです。引き続き日常の小さな幸せを見つけ続けてくださいね。
+                `;
+            } else if (totalScore >= 3.0) {
+                return `
+                    <strong>✨ 良好なプレイフルネス</strong><br>
+                    バランスの取れた状態です。日常に楽しさを見つける力があり、適度なプレイフルネスを保ちながら生活していらっしゃいます。心の状態も安定していると言えるでしょう。<br><br>
+                    時には疲れを感じることもあるかもしれませんが、そんな時こそ小さな楽しみに目を向けてみてください。あなたにはその力があります。
+                `;
+            } else if (totalScore >= 2.0) {
+                return `
+                    <strong>🌱 成長の余地あり</strong><br>
+                    日々の忙しさの中で、楽しさを感じる余裕が少なくなっているようです。プレイフル体験を増やすことで、より充実した日常を送れるでしょう。それはとても自然なことで、多くの方が経験することです。<br><br>
+                    今はそれでも大丈夫。無理をせず、ほんの少しでも「楽しい」と感じられる瞬間を大切にしてください。小さな一歩から始めることで、きっと心に余裕が生まれてきます。
+                `;
+            } else {
+                return `
+                    <strong>💪 改善のチャンス</strong><br>
+                    日常の中で楽しさを感じることが難しい状況にあるようです。日常に楽しさを取り入れることで、生活の質を向上させることができます。それは決してあなたが悪いわけではありません。時にはそんな時期もあるものです。<br><br>
+                    どんなに小さなことでも構いません。一日に一つ、「ちょっといいな」と思えることを見つけてみませんか？あなたは一人ではありません。ゆっくりと、自分のペースで大丈夫です。
+                `;
+            }
+        }
+
+        // 因子別コメント生成
+        function getFactorComments(factorScores) {
+            const comments = [];
+
+            // 最も高いスコアの因子
+            const maxScore = Math.max(...factorScores);
+            const maxIndex = factorScores.indexOf(maxScore);
+            
+            if (maxScore >= 3.5) {
+                const strengthTexts = [
+                    "日常の中で楽しさを見つけることがとても上手です。この感覚を大切にし続けてください。朝のコーヒータイムや料理の時間など、ルーティンの中に喜びを見出す力は素晴らしい才能です。",
+                    "自分らしさを大切にできていて素晴らしいです。その自由な心を保ち続けてくださいね。「母親」という役割から離れて、一人の人間として自分を大切にできているのは貴重な時間です。",
+                    "新しいことに挑戦する気持ちが豊かです。その創造性はあなたの大きな強みです。思いついたアイデアを実行に移す行動力は、生活に活力をもたらしています。",
+                    "お子さんとの時間を心から楽しめているのは本当に素敵なことです。子どもと一緒に童心に返って楽しめる感性は、親子の絆を深める大切な要素です。",
+                    "人との繋がりの中で喜びを見つけられているのは心の豊かさの表れです。友人や知り合いとの交流で心から笑えることは、精神的な支えになっています。"
+                ];
+                
+                comments.push({
+                    title: `💪 あなたの強み：${factorNames[maxIndex]}`,
+                    text: strengthTexts[maxIndex],
+                    show: true
+                });
+            }
+
+            // 実践的アドバイスセクション
+            const practicalAdvice = getPracticalAdvice(factorScores);
+            if (practicalAdvice.length > 0) {
+                comments.push({
+                    title: "🎯 今すぐできること",
+                    text: `<ul style="margin: 0.5rem 0; padding-left: 1.2rem;">${practicalAdvice.map(advice => `<li style="margin-bottom: 0.5rem;">${advice}</li>`).join('')}</ul>`,
+                    show: true
+                });
+            }
+
+            // 最も低いスコアの因子（2.5未満の場合）
+            const minScore = Math.min(...factorScores);
+            const minIndex = factorScores.indexOf(minScore);
+            
+            if (minScore < 2.5) {
+                const improvementTexts = [
+                    "忙しい毎日の中でも、ほんの少しの楽しみを意識してみませんか？朝のコーヒータイムに好きな音楽をかけたり、お気に入りの香りのハンドクリームを使ったり、5分でできる小さな楽しみから始めてみてください。",
+                    "時には「母親の私」ではなく「一人の私」の時間を作ることも大切です。入浴時間を少し長めにとってリラックスしたり、子どもが寝た後の短時間でも自分だけの時間を意識的に持ってみてくださいね。",
+                    "新しいことを始めるのは勇気がいりますが、小さな変化から試してみませんか？料理で新しい調味料や盛り付けを試したり、いつもと違う道を歩いてみたり、身近なところから始められます。",
+                    "お子さんとの時間に少し疲れを感じているかもしれません。完璧でなくても大丈夫。手遊びや歌を一緒に楽しんだり、お絵描きをしたり、簡単なことから一緒に楽しんでみてください。一緒にいるだけで十分愛情は伝わっています。",
+                    "今は人との繋がりに疲れを感じているかもしれません。無理をせず、SNSで共感できる投稿にコメントやいいねをしたり、近所の人との挨拶から始めてみてください。小さな繋がりから始めて大丈夫です。"
+                ];
+                
+                comments.push({
+                    title: `🌱 成長のヒント：${factorNames[minIndex]}`,
+                    text: improvementTexts[minIndex],
+                    show: true
+                });
+            }
+
+            return comments;
+        }
+
+        // 実践的アドバイス生成
+        function getPracticalAdvice(factorScores) {
+            const advice = [];
+            
+            if (factorScores[0] < 3.0) { // 日常の楽しさ発見
+                advice.push("朝のコーヒータイムに好きな音楽をかけて、5分だけ自分時間を作る");
+            }
+            if (factorScores[1] < 3.0) { // 自由感・解放感
+                advice.push("入浴時間を少し長めにとって、リラックスタイムにする");
+            }
+            if (factorScores[2] < 3.0) { // 創造的・自発的活動
+                advice.push("料理で新しい調味料や盛り付けを試してみる");
+            }
+            if (factorScores[3] < 3.0) { // 子どもとのプレイフル交流
+                advice.push("子どもと一緒に手遊びや歌を楽しむ時間を作る");
+            }
+            if (factorScores[4] < 3.0) { // 社会的つながりでの楽しさ
+                advice.push("SNSで共感できる投稿にコメントやいいねをする");
+            }
+            
+            // 共通アドバイス
+            advice.push("完璧を求めすぎず、小さな楽しみを大切にする");
+            advice.push("疲れた時は無理をせず、自分のペースを大切にする");
+            
+            return advice.slice(0, 5); // 最大5つまで表示
+        }
+
+        // 数値アニメーション
+        function animateNumber(element, start, end, duration) {
+            const startTime = performance.now();
+            
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = start + (end - start) * progress;
+                
+                element.textContent = current.toFixed(1);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            
+            requestAnimationFrame(update);
+        }
+
+        // レベル判定
+        function getLevel(score) {
+            if (score >= 4.0) {
+                return { text: "高い", emoji: "🌟", class: "level-high" };
+            } else if (score >= 3.0) {
+                return { text: "やや高い", emoji: "😊", class: "level-moderate-high" };
+            } else if (score >= 2.0) {
+                return { text: "やや低い", emoji: "🤔", class: "level-moderate-low" };
+            } else {
+                return { text: "低い", emoji: "😔", class: "level-low" };
+            }
+        }
+
+        // Google Apps Scriptにデータ送信
+        async function saveToGoogleSheets(results) {
+            try {
+                const data = {
+                    timestamp: results.timestamp,
+                    name: app.personalInfo.name,
+                    age: app.personalInfo.age,
+                    gender: app.personalInfo.gender,
+                    email: app.personalInfo.email,
+                    totalScore: results.totalScore.toFixed(2),
+                    factor1: results.factorScores[0].toFixed(2),
+                    factor2: results.factorScores[1].toFixed(2),
+                    factor3: results.factorScores[2].toFixed(2),
+                    factor4: results.factorScores[3].toFixed(2),
+                    factor5: results.factorScores[4].toFixed(2),
+                    userAgent: results.userAgent,
+                    answers: results.answers
+                };
+
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error('データ送信に失敗しました');
+                }
+
+                console.log('データ送信完了');
+            } catch (error) {
+                console.error('データ送信エラー:', error);
+                // エラーが発生してもユーザー体験を損なわないように、
+                // サイレントに処理する
+            }
+        }
+
+
+        // 診断再開始
+        function restartDiagnosis() {
+            app.currentQuestion = 0;
+            app.answers = {};
+            app.personalInfo = {};
+            
+            // フォームリセット
+            document.getElementById('name').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('gender').value = '';
+            document.getElementById('email').value = '';
+            hideFormError();
+            
+            showScreen('welcome-screen');
+        }
+
+        // 初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('プレイフル診断アプリが読み込まれました');
+        });
+    </script>
+</body>
+</html>
