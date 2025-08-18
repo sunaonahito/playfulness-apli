@@ -536,16 +536,6 @@
                         <input type="number" id="age" class="form-input" placeholder="例：30" min="18" max="99" required>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="gender">性別<span class="required">*</span></label>
-                        <select id="gender" class="form-select" required>
-                            <option value="">選択してください</option>
-                            <option value="女性">女性</option>
-                            <option value="男性">男性</option>
-                            <option value="その他">その他</option>
-                            <option value="回答しない">回答しない</option>
-                        </select>
-                    </div>
 
                     <div class="form-group">
                         <label class="form-label" for="email">メールアドレス<span class="required">*</span></label>
@@ -720,10 +710,9 @@
         function validatePersonalInfo() {
             const name = document.getElementById('name').value.trim();
             const age = document.getElementById('age').value;
-            const gender = document.getElementById('gender').value;
             const email = document.getElementById('email').value.trim();
 
-            return name && age && gender && email && validateEmail(email);
+            return name && age && email && validateEmail(email);
         }
 
         // メールアドレスバリデーション
@@ -737,7 +726,6 @@
             app.personalInfo = {
                 name: document.getElementById('name').value.trim(),
                 age: parseInt(document.getElementById('age').value),
-                gender: document.getElementById('gender').value,
                 email: document.getElementById('email').value.trim()
             };
         }
@@ -1110,7 +1098,6 @@
                     timestamp: results.timestamp,
                     name: app.personalInfo.name,
                     age: app.personalInfo.age,
-                    gender: app.personalInfo.gender,
                     email: app.personalInfo.email,
                     totalScore: results.totalScore.toFixed(2),
                     factor1: results.factorScores[0].toFixed(2),
@@ -1152,7 +1139,6 @@
             // フォームリセット
             document.getElementById('name').value = '';
             document.getElementById('age').value = '';
-            document.getElementById('gender').value = '';
             document.getElementById('email').value = '';
             hideFormError();
             

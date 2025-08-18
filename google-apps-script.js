@@ -83,15 +83,14 @@ function saveToSpreadsheet(data) {
       new Date(data.timestamp),      // A: 診断日時
       data.name || '',               // B: 名前
       data.age || '',                // C: 年齢
-      data.gender || '',             // D: 性別
-      data.email || '',              // E: メールアドレス
-      parseFloat(data.totalScore) || 0,  // F: 総合スコア
-      parseFloat(data.factor1) || 0,     // G: 日常の楽しさ発見
-      parseFloat(data.factor2) || 0,     // H: 自由感・解放感
-      parseFloat(data.factor3) || 0,     // I: 創造的・自発的活動
-      parseFloat(data.factor4) || 0,     // J: 子どもとのプレイフル交流
-      parseFloat(data.factor5) || 0,     // K: 社会的つながりでの楽しさ
-      data.userAgent || '',          // L: ユーザーエージェント
+      data.email || '',              // D: メールアドレス
+      parseFloat(data.totalScore) || 0,  // E: 総合スコア
+      parseFloat(data.factor1) || 0,     // F: 日常の楽しさ発見
+      parseFloat(data.factor2) || 0,     // G: 自由感・解放感
+      parseFloat(data.factor3) || 0,     // H: 創造的・自発的活動
+      parseFloat(data.factor4) || 0,     // I: 子どもとのプレイフル交流
+      parseFloat(data.factor5) || 0,     // J: 社会的つながりでの楽しさ
+      data.userAgent || '',          // K: ユーザーエージェント
     ];
 
     // 各質問の回答を追加（Q1-Q25）
@@ -135,7 +134,7 @@ function saveToSpreadsheet(data) {
  */
 function createHeaders(sheet) {
   const headers = [
-    '診断日時', '名前', '年齢', '性別', 'メールアドレス',
+    '診断日時', '名前', '年齢', 'メールアドレス',
     '総合スコア', '日常の楽しさ発見', '自由感・解放感', '創造的・自発的活動',
     '子どもとのプレイフル交流', '社会的つながりでの楽しさ', 'ユーザーエージェント'
   ];
@@ -166,7 +165,6 @@ function testSaveData() {
     timestamp: new Date().toISOString(),
     name: 'テスト太郎',
     age: 30,
-    gender: '男性',
     email: 'test@example.com',
     totalScore: 3.5,
     factor1: 3.2,
