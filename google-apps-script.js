@@ -4,7 +4,7 @@
  */
 
 // スプレッドシートIDを設定
-const SPREADSHEET_ID = '1h-ooMCAGAF6Q1erRHusScGfZLXSRoQIjgePfWnbaEqU';
+const SPREADSHEET_ID = '1O31BlTX6tfNv8Eo6vxbalQZGtsyM7E4fOYPl2-st8cY';
 const SHEET_NAME = 'プレイフル診断データ';
 
 /**
@@ -13,7 +13,7 @@ const SHEET_NAME = 'プレイフル診断データ';
 function doPost(e) {
   try {
     // リクエストデータの取得
-    const data = JSON.parse(e.postData.contents);
+    const data = JSON.parse(e.parameter.data);
     console.log('受信データ:', data);
 
     // スプレッドシートにデータを保存

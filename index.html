@@ -688,7 +688,7 @@
         };
 
         // Google Apps Script URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxQBGiAHqmmptP3dstZ0R6cGRm_tgoPHROEPyZeMhWzOZyZwVHGAxO61uaTFm7L1cMU/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzlSocwRIKNWmerdhhxPBMgBmadS4Dar2tMUSMTsIf_bO403htsWO28YNSRgFUcJ2eYxw/exec';
 
         // 診断開始
         function startDiagnosis() {
@@ -1109,12 +1109,12 @@
                     answers: results.answers
                 };
 
+                const formData = new FormData();
+                formData.append('data', JSON.stringify(data));
+
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
+                    body: formData
                 });
 
                 if (!response.ok) {
