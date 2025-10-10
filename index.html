@@ -536,6 +536,17 @@
                         <input type="number" id="age" class="form-input" placeholder="例：30" min="18" max="99" required>
                     </div>
 
+                    <div class="form-group">
+                        <label class="form-label" for="energy-level">今のあなたの元気度は？<span class="required">*</span></label>
+                        <select id="energy-level" class="form-select" required>
+                            <option value="" disabled selected>選択してください</option>
+                            <option value="5">5: とても高い</option>
+                            <option value="4">4: 高い</option>
+                            <option value="3">3: 普通</option>
+                            <option value="2">2: 低い</option>
+                            <option value="1">1: とても低い</option>
+                        </select>
+                    </div>
 
                     <div class="form-group">
                         <label class="form-label" for="email">メールアドレス<span class="required">*</span></label>
@@ -710,9 +721,10 @@
         function validatePersonalInfo() {
             const name = document.getElementById('name').value.trim();
             const age = document.getElementById('age').value;
+            const energyLevel = document.getElementById('energy-level').value;
             const email = document.getElementById('email').value.trim();
 
-            return name && age && email && validateEmail(email);
+            return name && age && energyLevel && email && validateEmail(email);
         }
 
         // メールアドレスバリデーション
@@ -726,8 +738,10 @@
             app.personalInfo = {
                 name: document.getElementById('name').value.trim(),
                 age: parseInt(document.getElementById('age').value),
+                energyLevel: parseInt(document.getElementById('energy-level').value),
                 email: document.getElementById('email').value.trim()
             };
+            console.log('デバッグ: 保存された個人情報:', app.personalInfo);
         }
 
         // フォームエラー表示
@@ -1099,6 +1113,7 @@
                     name: app.personalInfo.name,
                     age: app.personalInfo.age,
                     email: app.personalInfo.email,
+                    energyLevel: app.personalInfo.energyLevel,
                     totalScore: results.totalScore.toFixed(2),
                     factor1: results.factorScores[0].toFixed(2),
                     factor2: results.factorScores[1].toFixed(2),
@@ -1139,6 +1154,7 @@
             // フォームリセット
             document.getElementById('name').value = '';
             document.getElementById('age').value = '';
+            document.getElementById('energy-level').value = '';
             document.getElementById('email').value = '';
             hideFormError();
             
