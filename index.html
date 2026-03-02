@@ -1166,5 +1166,123 @@
             console.log('プレイフル診断アプリが読み込まれました');
         });
     </script>
+
+        <!-- フッター -->
+        <footer style="
+            background: linear-gradient(135deg, #fff5f7 0%, #fff9f0 100%);
+            border-top: 2px solid #FFD0D8;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-top: 2rem;
+        ">
+            <div style="max-width: 480px; margin: 0 auto;">
+                <img src="data:image/png;base64,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" alt="Ludix Lab" style="height: 48px; margin-bottom: 1rem; opacity: 0.9;">
+                <p style="margin: 0.25rem 0; color: #555; font-size: 0.9rem; font-weight: 600;">東京大学大学院情報学環</p>
+                <p style="margin: 0.25rem 0; color: #888; font-size: 0.85rem;">藤本徹研究室</p>
+                <div style="margin-top: 1rem;">
+                    <button onclick="document.getElementById('privacy-modal').style.display='flex'" style="background: none; border: none; color: #FF8A9B; font-size: 0.82rem; cursor: pointer; text-decoration: underline; padding: 0;">プライバシーポリシー</button>
+                </div>
+            </div>
+        </footer>
+
+        <!-- プライバシーポリシー モーダル -->
+        <div id="privacy-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
+            <div style="background:#fff; border-radius:16px; max-width:640px; width:100%; max-height:85vh; display:flex; flex-direction:column; box-shadow:0 8px 40px rgba(0,0,0,0.2);">
+                <!-- ヘッダー -->
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid #FFD0D8; flex-shrink:0;">
+                    <h2 style="margin:0; font-size:1.1rem; color:#FF8A9B;">🔒 プライバシーポリシー</h2>
+                    <button onclick="document.getElementById('privacy-modal').style.display='none'" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#aaa; line-height:1;">×</button>
+                </div>
+                <!-- 本文 -->
+                <div style="overflow-y:auto; padding:1.5rem; font-size:0.88rem; line-height:1.8; color:#444;">
+                    <p>本プライバシーポリシーは、東京大学大学院情報学環藤本研究室（以下「本組織」といいます）のサービスを利用するすべての方（以下「利用者」といいます）から提供され、または本組織が取得する利用者の皆様の個人情報、その他個人に関する情報の取扱いについて記載したものです。</p>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">1. 個人情報について</h3>
+                    <p>本プライバシーポリシーにおける個人情報は、個人情報の保護に関する法律において定められている個人情報を指しており、本組織は、利用者の皆様の個人情報を氏名、住所、メールアドレス、ID、各種プロフィール情報（ニックネーム、性別、生年月日、アイコン、カバー画像を含む）、位置情報などの一つまたは二つ以上の組み合わせにより特定の個人を識別可能な情報と認識しています。本組織は利用者の皆様の大切な個人情報の保護に万全を尽くし、法令およびその他の規範を遵守いたします。</p>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">2. 個人情報の利用目的について</h3>
+                    <p>利用者の皆様から取得した個人情報は以下の目的のために利用いたします。</p>
+                    <ul style="padding-left:1.25rem;">
+                        <li>ログイン時、ログイン後における本人認証、各種画面における利用者の皆様の情報の自動表示など本サービスの利用に必要な利用者の皆様の管理のためのシステム運営</li>
+                        <li>サポートサービスの提供、お問い合わせへの対応</li>
+                        <li>メンテナンス情報、重要なご連絡など本サービスを運用する上で必要な事項に関するお知らせ</li>
+                        <li>本組織が利用者の皆様に有用だと考えるメールマガジン、お知らせ</li>
+                        <li>キャンペーン、懸賞等の抽選および賞品等の発送並びにこれに関連した応募者への連絡</li>
+                        <li>本サービスへのご質問、ご意見、お問い合わせなどに関する回答</li>
+                        <li>本サービスの改善や新規サービス開発に必要なデータの解析や分析</li>
+                        <li>個人を特定できない範囲内での本サービスに関する統計情報の作成、利用、開示</li>
+                        <li>個人を特定できない範囲内での利用者の皆様の行動、性別、本サービス内でのアクセス履歴などを用いたターゲティング広告の配信</li>
+                        <li>個人を特定できない範囲内での本組織、本組織提携先、その他第三者のマーケティング資料および研究資料としての情報提供</li>
+                        <li>本サービスに関するご利用料金の請求</li>
+                        <li>本組織からの支払い</li>
+                        <li>その他、上記の利用目的および本組織の事業に付帯、関連する目的</li>
+                    </ul>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">3. 情報の取得方法について</h3>
+                    <p>本組織は、例えば以下の方法で利用者の皆様の個人情報およびその他個人に関する情報を取得する場合があります。</p>
+                    <ul style="padding-left:1.25rem;">
+                        <li>利用者の皆様が本サービスのアカウントを作成するに際し、利用者の皆様自ら、または本組織提携先などの第三者サービスを通じて提供されるメールアドレスなど当該アカウント作成に必要な情報を取得いたします。</li>
+                        <li>利用者の皆様が本サービスを利用するに際し、氏名、住所、メールアドレス、ID、プロフィール情報などを利用者の皆様自身が入力される情報を取得いたします。</li>
+                        <li>利用者の皆様が本サービスを利用するに際し、プロフィール情報の居住エリアを記録するため、または利用者の皆様に適した広告配信などのために、スマートフォン端末等の所在地にかかる位置情報を取得いたします（ただし、利用者の皆様がスマートフォン端末等で同意する場合に限ります）。</li>
+                    </ul>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">4. 第三者への情報開示について</h3>
+                    <p>本サービス運営のために収集した利用者の皆様の個人情報は、ご本人の同意がない限り第三者へ提供されることはありません。ただし、以下に挙げる場合はこの限りではありません。</p>
+                    <ul style="padding-left:1.25rem;">
+                        <li>法令に基づいて、開示が必要であると判断した場合</li>
+                        <li>人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であると判断した場合</li>
+                        <li>公衆衛生の向上または児童の健全な育成推進のために特に必要がある場合であって、本人の同意を得ることが困難であると判断した場合</li>
+                        <li>国の機関若しくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって、本人の同意を得ることにより当該事務の遂行に支障を及ぼすおそれがあると判断した場合</li>
+                        <li>合併、事業譲渡その他の事由による本組織の事業の承継の検討の際に、事業の承継を検討する者に対して開示する必要があると判断した場合</li>
+                    </ul>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">5. 委託先の監督</h3>
+                    <p>本組織は、個人情報の取扱いの全部または一部を第三者に対して委託する場合があります。この場合、本組織は、第三者の選定を適切に行い、委託先と機密保持を含む契約を締結し、委託先において個人情報の安全管理が図られるよう、必要かつ適切な監督を行います。</p>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">6. 共同利用</h3>
+                    <p>本組織は、以下のように、本サービスの利用者の個人情報を共同利用いたします。</p>
+                    <ul style="padding-left:1.25rem;">
+                        <li><strong>共同利用の目的：</strong>上記「2. 個人情報の利用目的について」の通り</li>
+                        <li><strong>共同利用する情報：</strong>本組織が法人向けサービスを契約している法人にアカウント集合（以下「組織」といいます）を作成した際、当該法人が組織に所属させたアカウントの利用者の個人情報</li>
+                        <li><strong>共同利用者の範囲：</strong>法人向けサービスを契約している法人</li>
+                        <li><strong>管理責任者：</strong>法人向けサービスを導入している法人が保有する個人情報については、当該法人がその管理の責任を負います。</li>
+                    </ul>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">7. 個人情報の訂正削除について</h3>
+                    <p>本組織では、利用者の皆様ご本人またはその代理人より、個人情報の訂正、削除、利用の停止等の申し出があった場合、ご本人であることを確認した上で、業務遂行上必要な範囲において、合理的な期間で調査を行い、法令に従い、訂正、削除、利用の停止等を行います。</p>
+                    <p>なお、本サービス上のプロフィール情報の訂正に関しては、本サービス上のプロフィールページにおいて、利用者の皆様が自由に変更・削除することができます。ただし、本組織は、利用者の皆様の個人情報のバックアップデータについて、一定期間保持し、その後に削除する場合があります。</p>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">8. セキュリティについて</h3>
+                    <p>本組織は、利用者の皆様の個人情報を保護するため、適切な組織的・技術的なセキュリティ手段を講じ、個人情報の不正使用、紛失または改ざんを防ぐよう努めます。また、個人情報へのアクセス権限を、当該情報にアクセスする必要のある従業員および委託先等に限定して付与します。</p>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">9. 外部サービス、リンクについて</h3>
+                    <p>本組織は、利用者の皆様の同意を得て本サービスと連携する第三者のサービス（以下「外部サービス」といいます）と連携して本サービスを提供することがありますが、利用者は、自らの責任において外部サービスを利用するものとし、本組織は、外部サービスの利用に関連して利用者に発生した損害について、一切の責任を負いません。本サービスに外部サービス等の第三者のページへのリンクを含む場合、本組織は当該リンク先における個人情報の取り扱いには責任を負いかねます。各リンク先のサービスのご利用に際してはそれぞれの利用規約およびプライバシーポリシーを一読されることを推奨します。</p>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">10. 属性情報、行動履歴などの利用について</h3>
+                    <p>本組織では、本サービスのご利用状況を把握し、本サービスの品質および利便性を向上するため、また利用者の皆様に適した広告配信のために、利用者の皆様のプロフィール等の属性情報、Cookie、IDFA、Advertising ID、または本サービスでのアクセスログ、その他行動履歴などを保存、利用することがあります。これらの情報に特定の個人を識別する情報は含まれていません。本組織は、これらの情報をその内容に応じて適切に管理いたします。また、本組織では、同様の目的でこれらの情報の取扱いの全部または一部を第三者に委託し、また第三者の外部サービスを利用する場合があります。</p>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">11. 免責について</h3>
+                    <p>以下の場合は、第三者による個人情報の取得に関し、本組織は何らの責任を負いません。</p>
+                    <ul style="padding-left:1.25rem;">
+                        <li>利用者の皆様ご本人が第三者に個人情報を明らかにした場合</li>
+                        <li>利用者の皆様が本サービス上に入力した情報等により、個人が識別できてしまった場合</li>
+                        <li>第三者が本サービス外（本サービスからリンクの張られている他のサイトを含む）で個人情報を取得した場合</li>
+                        <li>利用者の皆様ご本人以外が利用者を識別できる情報（ID、パスワード等）を入手した場合</li>
+                    </ul>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">12. プライバシーポリシーの改定について</h3>
+                    <p>本組織は、プライバシーポリシーを適宜見直し、改善し、改定いたします。プライバシーポリシーの変更を行う際は、当ページで公表いたします。</p>
+
+                    <h3 style="color:#FF8A9B; font-size:0.95rem; margin-top:1.25rem;">13. 個人情報に関するお問い合わせ先について</h3>
+                    <p style="line-height:2;">〒113-8654 東京都文京区本郷７丁目３−１<br>東京大学大学院情報学環　藤本研究室<br><a href="mailto:ludix-contact@ludixlab.net" style="color:#FF8A9B;">ludix-contact@ludixlab.net</a></p>
+
+                    <p style="margin-top:1.5rem; color:#aaa; font-size:0.8rem;">（附則）2026年3月1日 制定</p>
+                </div>
+                <!-- フッター -->
+                <div style="padding:1rem 1.5rem; border-top:1px solid #FFD0D8; flex-shrink:0; text-align:center;">
+                    <button onclick="document.getElementById('privacy-modal').style.display='none'" style="background:#FF8A9B; color:#fff; border:none; border-radius:24px; padding:0.6rem 2rem; font-size:0.9rem; cursor:pointer; font-weight:600;">閉じる</button>
+                </div>
+            </div>
+        </div>
 </body>
 </html>
